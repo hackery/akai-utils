@@ -125,3 +125,19 @@ device responds with URB_COMPLETE on the in endpoint 81:
 ```
 
 Is the null padding needed? Who knows.
+
+# Using `amidi`
+
+Taking the sequences above, stripping out the `04` event code gives us bare
+SysEx messages. These can be fed to `amidi`:
+
+```
+amidi --list-devices
+
+amidi -p hw:4,0,0  -S 'f0 47 7f 76 63 00 01 01 f7' -d -t 1
+
+F0477F7663000D0100040C000302000003003C00F7
+21 bytes read
+
+amidi -p hw:4,0,0 -S 'f0 47 7f 76 61 00 0d 01 00 04 0c 00 03 02 00 00 03 00 3c 00 f7'
+```
